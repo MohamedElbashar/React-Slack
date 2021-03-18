@@ -1,6 +1,7 @@
 /** @format */
 
 import React from "react";
+import md5 from "md5";
 
 import {
   Grid,
@@ -23,6 +24,7 @@ class Register extends React.Component {
     passwordConfirmation: "",
     errors: [],
     loading: false,
+    usersRef: firebase.database().ref("users"),
   };
 
   isFormValid = () => {
@@ -85,7 +87,25 @@ class Register extends React.Component {
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then((createdUser) => {
           console.log(createdUser);
-          this.setState({ loading: false });
+          createdUser.user
+            .updateProfile({
+              displayName: this.state.username,
+              photoURL: `http://gravtar.com/avatar/${md5(
+                createdUser.user.email
+              )}?d=identicon`,
+            })
+            .then(() => {
+              this.saveUser(createdUser).then(() => {
+                console.log("user saved");
+              });
+            })
+            .catch((err) => () => {
+              console.error(err);
+              this.setState({
+                errors: this.state.errors.concat(err),
+                loading: false,
+              });
+            });
         })
         .catch((err) => {
           console.error(err);
@@ -95,6 +115,13 @@ class Register extends React.Component {
           });
         });
     }
+  };
+
+  saveUser = (createdUser) => {
+    return this.state.usersRef.child(createdUser.user.uid).set({
+      name: createdUser.user.displayName,
+      avatar: createdUser.user.photoURL,
+    });
   };
   render() {
     const {
