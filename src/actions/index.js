@@ -10,3 +10,9 @@ export const setUser = (user) => {
     },
   };
 };
+
+export const ClearUser = () => {
+  return {
+    type: actionTypes.CLEAR_USER,
+  };
+};
