@@ -3,7 +3,6 @@
 import React from "react";
 import { Dropdown, Grid, Header, Icon, Image } from "semantic-ui-react";
 import firebase from "../../firebase";
-import { connect } from "react-redux";
 class UserPanel extends React.Component {
   state = {
     user: this.props.currentUser,
