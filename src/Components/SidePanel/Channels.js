@@ -2,9 +2,9 @@
 
 import React from "react";
 import firebase from "../../firebase";
-import { Menu, Icon, Modal, Form, Input, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { setCurrentChannel } from "../../actions";
+import { Menu, Icon, Modal, Form, Input, Button } from "semantic-ui-react";
 
 class Channels extends React.Component {
   state = {
@@ -40,12 +40,13 @@ class Channels extends React.Component {
 
   setFirstChannel = () => {
     const firstChannel = this.state.channels[0];
-    if (this.state.firstLoad && this.state.channels.length) {
+    if (this.state.firstLoad && this.state.channels.length > 0) {
       this.props.setCurrentChannel(firstChannel);
       this.setActiveChannel(firstChannel);
     }
     this.setState({ firstLoad: false });
   };
+
   addChannel = () => {
     const { channelsRef, channelName, channelDetails, user } = this.state;
 
@@ -93,6 +94,7 @@ class Channels extends React.Component {
   setActiveChannel = (channel) => {
     this.setState({ activeChannel: channel.id });
   };
+
   displayChannels = (channels) =>
     channels.length > 0 &&
     channels.map((channel) => (
@@ -106,6 +108,7 @@ class Channels extends React.Component {
         # {channel.name}
       </Menu.Item>
     ));
+
   isFormValid = ({ channelName, channelDetails }) =>
     channelName && channelDetails;
 
