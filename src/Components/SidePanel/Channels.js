@@ -21,6 +21,11 @@ class Channels extends React.Component {
   componentDidMount() {
     this.addListeners();
   }
+
+  componentWillUnmount() {
+    this.removeListeners();
+  }
+
   addListeners = () => {
     let loadedChannels = [];
     this.state.channelsRef.on("child_added", (snap) => {
@@ -28,6 +33,11 @@ class Channels extends React.Component {
       this.setState({ channels: loadedChannels }, () => this.setFirstChannel());
     });
   };
+
+  removeListeners = () => {
+    this.state.channelsRef.off();
+  };
+
   setFirstChannel = () => {
     const firstChannel = this.state.channels[0];
     if (this.state.firstLoad && this.state.channels.length) {
