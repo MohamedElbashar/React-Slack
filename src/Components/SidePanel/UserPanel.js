@@ -39,7 +39,7 @@ class UserPanel extends React.Component {
       .then(() => console.log("signedOut"));
   };
   render() {
-    console.log(this.props.currentUser);
+    // console.log(this.props.currentUser);
     const { user } = this.state;
     return (
       <Grid style={{ background: "#4c3c4c" }}>

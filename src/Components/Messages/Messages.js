@@ -152,7 +152,7 @@ class Messages extends React.Component {
       return acc;
     }, {});
     this.props.setUserPosts(userPosts);
-    console.log(userPosts);
+    // console.log(userPosts);
   };
   displayMessages = (messages) =>
     messages.length > 0 &&
